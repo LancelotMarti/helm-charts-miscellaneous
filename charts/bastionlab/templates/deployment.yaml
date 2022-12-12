@@ -1,0 +1,95 @@
+{{- $fullName := include "library-chart.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "library-chart.fullname" . }}
+  labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "library-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "library-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "library-chart.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.bastionlab.enableAuth }}
+      volumes:
+        - name: config-server
+          configMap:
+            name: {{ include "library-chart.fullname" . }}
+
+        - name: keys-volume
+          emptyDir:
+            sizeLimit: {{ .Values.bastionlab.keysDirSize }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.service.image.repository }}:{{ .Values.service.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.service.image.pullPolicy }}
+          {{- if .Values.bastionlab.enableAuth }}
+          volumeMounts:
+            - mountPath: /app/bin/config.toml
+              name: config-server
+              subPath: config.toml
+            - mountPath: /app/bin/{{ .Values.bastionlab.keysDirectory }}
+              name: keys-volume
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.networking.service.port}}
+              protocol: TCP
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+      {{- if .Values.bastionlab.enableAuth }}      
+      initContainers:
+        - name: generate-keys
+          image: "python:alpine"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /home
+              name: keys-volume
+          command:
+            - sh
+            - -c
+            - |
+              pip install --no-cache cryptography && \
+              wget https://raw.githubusercontent.com/mithril-security/bastionlab/master/client/src/bastionlab/keys.py && \
+              wget https://raw.githubusercontent.com/amine-bs/bastionlab-helm-chart/main/utils/generate_keys.py && \
+              mkdir /home/owners && \
+              mkdir /home/users && \
+              mkdir /home/privkeys && \
+              python generate_keys.py {{ .Values.bastionlab.usersNumber }}
+      {{- end }}
+              
+      {{- with .Values.nodeSelector }} 
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
