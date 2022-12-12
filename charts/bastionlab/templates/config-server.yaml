@@ -1,0 +1,13 @@
+{{- if .Values.bastionlab.enableAuth }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "library-chart.fullname" . }}
+  labels: 
+    {{- include "library-chart.labels" . | nindent 4 }}
+data:
+  config.toml: |
+    client_to_enclave_untrusted_url = "https://0.0.0.0:50056"
+    public_keys_directory = "{{ .Values.bastionlab.keysDirectory }}"
+    session_expiry_in_secs = 1500
+{{- end }}
