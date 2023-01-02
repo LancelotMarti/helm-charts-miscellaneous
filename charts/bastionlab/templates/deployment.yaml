@@ -28,30 +28,34 @@ spec:
       serviceAccountName: {{ include "library-chart.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.bastionlab.enableAuth }}
       volumes:
         - name: config-server
           configMap:
             name: {{ include "library-chart.fullname" . }}
-
         - name: keys-volume
           emptyDir:
             sizeLimit: {{ .Values.bastionlab.keysDirSize }}
-      {{- end }}
+        - name: data-volume
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "library-chart.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.service.image.repository }}:{{ .Values.service.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.service.image.pullPolicy }}
-          {{- if .Values.bastionlab.enableAuth }}
           volumeMounts:
             - mountPath: /app/bin/config.toml
               name: config-server
               subPath: config.toml
-            - mountPath: /app/bin/{{ .Values.bastionlab.keysDirectory }}
+            - mountPath: /app/bin/keys
               name: keys-volume
-          {{- end }}
+            - mountPath: /app/bin/data_frames
+              name: data-volume
           ports:
             - name: http
               containerPort: {{ .Values.networking.service.port}}
@@ -60,7 +64,6 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 
-      {{- if .Values.bastionlab.enableAuth }}      
       initContainers:
         - name: generate-keys
           image: "python:alpine"
@@ -79,7 +82,6 @@ spec:
               mkdir /home/users && \
               mkdir /home/privkeys && \
               python generate_keys.py {{ .Values.bastionlab.usersNumber }}
-      {{- end }}
               
       {{- with .Values.nodeSelector }} 
       nodeSelector:

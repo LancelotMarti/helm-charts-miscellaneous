@@ -5,24 +5,45 @@
       "bastionlab": {
         "type": "object",
         "properties": {
-          "enableAuth": {
-            "description": "This will create authentication keys",
-            "title": "enable authentication",
-            "type": "boolean",
-            "default": false
+          "sessionExpiryInSecs": {
+            "descirption": "Session expiry in seconds",
+            "title": "Session expiry",
+            "default": "1500"
           },
           "usersNumber": {
             "description": "Number of keys generated for users",
             "title": "Number of users",
             "type": "integer",
-            "default": 1,
-            "form": true,
-            "hidden": {
-              "value": false,
-              "path": "bastionlab/enableAuth"
-            }
+            "default": 1
           }
         }
+      },
+      "persistence": {
+          "description": "Configuration for persistence",
+          "type": "object",
+          "properties": {
+              "enabled": {
+                  "type": "boolean",
+                  "description": "Create a persistent volume",
+                  "default": true
+              },
+              "size": {
+                  "type": "string",
+                  "title": "Persistent volume size",
+                  "description": "Size of the persistent volume",
+                  "default": "10Gi",
+                  "form": true,
+                  "render": "slider",
+                  "sliderMin": 1,
+                  "sliderMax": 100,
+                  "sliderStep": 1,
+                  "sliderUnit": "Gi",
+                  "hidden": {
+                    "value": false,
+                    "path": "persistence/enabled"
+                  }                    
+              }
+          }
       },
       "resources": {
         "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
