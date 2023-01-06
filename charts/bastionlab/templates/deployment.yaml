@@ -77,7 +77,7 @@ spec:
             - |
               pip install --no-cache cryptography && \
               wget https://raw.githubusercontent.com/mithril-security/bastionlab/master/client/src/bastionlab/keys.py && \
-              wget https://raw.githubusercontent.com/amine-bs/bastionlab-helm-chart/main/utils/generate_keys.py && \
+              wget https://raw.githubusercontent.com/InseeFrLab/helm-charts-miscellaneous/master/charts/bastionlab/utils/generate_keys.py && \
               mkdir /home/owners && \
               mkdir /home/users && \
               mkdir /home/privkeys && \
