@@ -3,19 +3,32 @@ service:
     repository: "mithrilsecuritysas/bastionlab"
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v0.3.5"
+    tag: "v0.3.6"
 
 bastionlab:
-  enableAuth: true
-  keysDirectory: "keys"
   usersNumber: 1
   keysDirSize: 500Mi
+  sessionExpiryInSecs: 1500
 
 replicaCount: 1
 
 security:
   networkPolicy: 
     enabled: true
+
+persistence:
+  enabled: true
+  ## database data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  # existingClaim: ""
 
 imagePullSecrets: []
 nameOverride: ""
