@@ -261,6 +261,7 @@
                     "properties": {
                         "dataset_store": {
                             "type": "object",
+                            "description": "dataset store configuration",
                             "properties": {
                                 "ds_store_type": {
                                     "description": "The type of dataset store.",
@@ -268,44 +269,59 @@
                                         "basic",
                                         "LRU_cache"
                                     ],
-                                    "type": "string"
+                                    "type": "string",
+                                    "default": "LRU_cache"
                                 },
                                 "max_memory_usage": {
                                     "description": "Max memory usage of dataset store. Only useful for LRU_cache type.",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "default": 512
                                 }
                             }
                         },
                         "develop_mode": {
                             "description": "When True, service database is reset to default user and dataset collections.",
-                            "type": "boolean"
+                            "type": "boolean",
+                            "default": false
                         },
                         "submit_limit": {
-                            "type": "integer"
+                            "description": "Currently unused, maximum query rate",
+                            "type": "integer",
+                            "default": 300
                         },
                         "server": {
                             "type": "object",
+                            "description": "server configuration",
                             "properties": {
                                 "time_attack": {
                                     "type": "object",
+                                    "description": "methods to avoid time side channel attack",
                                     "properties": {
                                         "magnitude": {
-                                            "type": "integer"
+                                            "type": "integer",
+                                            "description": "Noise magnitude",
+                                            "default": 1
                                         },
                                         "method": {
                                             "enum": [
                                                 "jitter",
                                                 "stall"
                                             ],
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "method for noise addition",
+                                            "default": "jitter"
                                         }
                                     }
                                 },
                                 "host_ip": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "ip host of server",
+                                    "default": "0.0.0.0"
                                 },
                                 "host_port": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "port of server",
+                                    "default": "80"
                                 },
                                 "log_level": {
                                     "enum": [
@@ -316,13 +332,19 @@
                                         "error",
                                         "critical"
                                     ],
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "level of verbosity",
+                                    "default": "info"
                                 },
                                 "reload": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "automatic reload of server",
+                                    "default": true
                                 },
                                 "workers": {
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "description": "number of workers",
+                                    "default": 1
                                 }
                             }
                         }
