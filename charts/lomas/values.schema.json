@@ -82,86 +82,58 @@
             }
         },
         "mongodb": {
-            "description": "MongoDB database user configuration",
+            "description": "mongodb database user configuration",
             "type": "object",
             "properties": {
-                "architecture": {
-                    "type": "string",
-                    "description": "DB architecture",
-                    "default": "standalone"
+                "image": {
+                    "type": "object",
+                    "description": "image specific configuration",
+                    "properties": {
+                        "tag": {
+                            "type": "string",
+                            "description": "mongodb version",
+                            "default": "6.0.9-debian-11-r5"
+                        }
+                    }
                 },
                 "auth": {
                     "type": "object",
-                    "description": "Authentification parameters",
+                    "description": "Authentification configuration",
                     "properties": {
                         "enabled": {
                             "type": "boolean",
-                            "description": "Add MongoDB to server",
+                            "description": "add mongodb to server",
                             "default": true
                         },
                         "rootUser": {
                             "type": "string",
-                            "description": "MongoDB root user",
-                            "default": "CHANGE ME"
+                            "description": "root name",
+                            "default": "root"
                         },
                         "rootPassword": {
                             "type": "string",
-                            "description": "MongoDB root password",
-                            "default": "CHANGE ME"
-                        },
-                        "usernames": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
+                            "description": "root password",
+                            "default": "changeme",
+                            "x-form": {
+                                "value": "{{project.password}}"
                             },
-                            "description": "MongoDB usernames",
-                            "default": "CHANGE ME"
-                        },
-                        "passwords": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            },
-                            "description": "MongoDB user passwords",
-                            "default": "CHANGE ME"
+                            "x-onyxia": {
+                                "overwriteDefaultWith": "{{project.password}}"
+                            }
                         },
                         "databases": {
                             "type": "array",
                             "items": {
                                 "type": "string"
                             },
-                            "description": "Database name",
+                            "description": "default databases",
                             "default": ["defaultdb"]
-                        }
-                    }
-                },
-                "discoverable": {
-                    "type": "object",
-                    "properties": {
-                        "allow": {
-                            "type": "boolean",
-                            "description": "Discoverable",
-                            "default": true
-                        }
-                    }
-                },
-                "fullnameOverride": {
-                    "type": "string",
-                    "description": "fullnameOverride",
-                    "default": "lomas-mongodb"
-                },
-                "image": {
-                    "type": "object",
-                    "properties": {
-                        "tag": {
-                            "type": "string",
-                            "description": "Image tag",
-                            "default": "6.0.9-debian-11-r5"
                         }
                     }
                 },
                 "persistence": {
                     "type": "object",
+                    "description": "configuration for persistence",
                     "properties": {
                         "resourcePolicy": {
                             "description": "Set this to 'keep' to disable data pvc deletion when uninstalling the chart. Subsequent installs will use the same pvc, restoring the state of the server. Note: if the runtime_args.settings.develop_mode is set to True, the server state will be reset (default datasets and budgets).",
@@ -172,53 +144,128 @@
                             "type": "string",
                             "default": ""
                         }
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Create a persistent volume",
+                        "default": true
+                    },
+                    "size": {
+                        "type": "string",
+                        "title": "Persistent volume size",
+                        "description": "Size of the persistent volume",
+                        "default": "10Gi",
+                        "form": true,
+                        "render": "slider",
+                        "sliderMin": 1,
+                        "sliderMax": 100,
+                        "sliderStep": 1,
+                        "sliderUnit": "Gi",
+                        "hidden": {
+                            "value": false,
+                            "path": "mongodb/persistence/enabled"
+                        }
                     }
                 },
-                "replicaCount": {
-                    "type": "integer",
-                    "description": "replicaCount",
-                    "default": 1
-                },
                 "resources": {
+                    "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
                     "type": "object",
-                    "description": "resources",
-                    "default": {}
+                    "properties": {
+                        "requests": {
+                            "description": "Guaranteed resources",
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "description": "The amount of cpu guaranteed",
+                                    "title": "CPU",
+                                    "type": "string",
+                                    "default": "100m",
+                                    "render": "slider",
+                                    "sliderMin": 50,
+                                    "sliderMax": 40000,
+                                    "sliderStep": 50,
+                                    "sliderUnit": "m",
+                                    "sliderExtremity": "down",
+                                    "sliderExtremitySemantic": "guaranteed",
+                                    "sliderRangeId": "cpu"
+                                },
+                                "memory": {
+                                    "description": "The amount of memory guaranteed",
+                                    "title": "memory",
+                                    "type": "string",
+                                    "default": "2Gi",
+                                    "render": "slider",
+                                    "sliderMin": 1,
+                                    "sliderMax": 200,
+                                    "sliderStep": 1,
+                                    "sliderUnit": "Gi",
+                                    "sliderExtremity": "down",
+                                    "sliderExtremitySemantic": "guaranteed",
+                                    "sliderRangeId": "memory"
+                                }
+                            }
+                        },
+                        "limits": {
+                            "description": "max resources",
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "description": "The maximum amount of cpu",
+                                    "title": "CPU",
+                                    "type": "string",
+                                    "default": "30000m",
+                                    "render": "slider",
+                                    "sliderMin": 50,
+                                    "sliderMax": 40000,
+                                    "sliderStep": 50,
+                                    "sliderUnit": "m",
+                                    "sliderExtremity": "up",
+                                    "sliderExtremitySemantic": "Maximum",
+                                    "sliderRangeId": "cpu"
+                                },
+                                "memory": {
+                                    "description": "The maximum amount of memory",
+                                    "title": "Memory",
+                                    "type": "string",
+                                    "default": "50Gi",
+                                    "render": "slider",
+                                    "sliderMin": 1,
+                                    "sliderMax": 200,
+                                    "sliderStep": 1,
+                                    "sliderUnit": "Gi",
+                                    "sliderExtremity": "up",
+                                    "sliderExtremitySemantic": "Maximum",
+                                    "sliderRangeId": "memory"
+                                }
+                            }
+                        }
+                    }
                 },
                 "security": {
+                    "description": "security specific configuration",
                     "type": "object",
                     "properties": {
                         "networkPolicy": {
                             "type": "object",
+                            "description": "Define access policy to the service",
                             "properties": {
                                 "enabled": {
                                     "type": "boolean",
-                                    "description": "Network policy enabled",
-                                    "default": true
+                                    "title": "Enable network policy",
+                                    "description": "Only pod from the same namespace will be allowed",
+                                    "default": true,
+                                    "x-form": {
+                                        "value": "{{region.defaultNetworkPolicy}}"
+                                    },
+                                    "x-onyxia": {
+                                        "overwriteDefaultWith": "region.defaultNetworkPolicy"
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        },
-        "nameOverride": {
-            "description": "Partially overrides lomas-server.fullname template, keeping the version number.",
-            "type": "string"
-        },
-        "nodeSelector": {
-            "type": "object"
-        },
-        "podAnnotations": {
-            "type": "object"
-        },
-        "podSecurityContext": {
-            "type": "object"
-        },
-        "replicaCount": {
-            "type": "integer"
-        },
-        "resources": {
-            "type": "object"
         },
         "runtime_args": {
             "type": "object",
