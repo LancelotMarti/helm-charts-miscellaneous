@@ -25,5 +25,5 @@ appVersion: "0.0.0"
 
 dependencies:
   - name: lomas-server
-    version: "0.1.0"
+    version: "0.0.1"
     repository: https://github.com/dscc-admin-ch/lomas
