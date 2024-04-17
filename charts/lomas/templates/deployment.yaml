@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "lomas_client.fullname" . }}
+  name: {{ include "lomas_server.fullname" . }}
   labels:
-    {{- include "lomas_client.labels" . | nindent 4 }}
+    {{- include "lomas_server.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "lomas_client.selectorLabels" . | nindent 6 }}
+      {{- include "lomas_server.selectorLabels" . | nindent 6 }}
   replicas: 1
   template:
     metadata:
@@ -16,9 +16,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "lomas_client.selectorLabels" . | nindent 8 }}
+        {{- include "lomas_server.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "lomas_client.serviceAccountName" . }}
+      serviceAccountName: {{ include "lomas_server.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       
@@ -30,20 +30,22 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
           - name: http
-            containerPort: 8888
+            containerPort: {{ .Values.service.port }}
             protocol: TCP
         volumeMounts:
-          - name: secrets
+          - name: config-and-secrets
             readOnly: True
-            mountPath: "/root/.jupyter/"
+            mountPath: "/usr/lomas_server/"
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        - name: secrets
+        - name: config-and-secrets
           projected:
             sources:
             - secret:
-                name: {{ include "lomas_client.fullname" . }}
+                name: {{ include "lomas_server.fullname" . }}
+            - configMap:
+                name: {{ include "lomas_server.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
