@@ -2,18 +2,19 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "affinity": {
-            "type": "object"
-        },
-        "fullnameOverride": {
-            "description": "Fully overrides the lomas-server.fullname template.",
-            "type": "string"
-        },
         "image": {
+            "description": "image docker",
             "type": "object",
             "properties": {
                 "pullPolicy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "option when pulling the docker image",
+                    "default": "IfNotPresent",
+                    "enum": [
+                        "IfNotPresent",
+                        "Always",
+                        "Never"
+                    ]
                 },
                 "repository": {
                     "type": "string"
@@ -22,9 +23,6 @@
                     "type": "string"
                 }
             }
-        },
-        "imagePullSecrets": {
-            "type": "array"
         },
         "ingress": {
             "type": "object",
@@ -167,80 +165,6 @@
                         }
                     }
                 },
-                "resources": {
-                    "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
-                    "type": "object",
-                    "properties": {
-                        "requests": {
-                            "description": "Guaranteed resources",
-                            "type": "object",
-                            "properties": {
-                                "cpu": {
-                                    "description": "The amount of cpu guaranteed",
-                                    "title": "CPU",
-                                    "type": "string",
-                                    "default": "100m",
-                                    "render": "slider",
-                                    "sliderMin": 50,
-                                    "sliderMax": 40000,
-                                    "sliderStep": 50,
-                                    "sliderUnit": "m",
-                                    "sliderExtremity": "down",
-                                    "sliderExtremitySemantic": "guaranteed",
-                                    "sliderRangeId": "cpu"
-                                },
-                                "memory": {
-                                    "description": "The amount of memory guaranteed",
-                                    "title": "memory",
-                                    "type": "string",
-                                    "default": "2Gi",
-                                    "render": "slider",
-                                    "sliderMin": 1,
-                                    "sliderMax": 200,
-                                    "sliderStep": 1,
-                                    "sliderUnit": "Gi",
-                                    "sliderExtremity": "down",
-                                    "sliderExtremitySemantic": "guaranteed",
-                                    "sliderRangeId": "memory"
-                                }
-                            }
-                        },
-                        "limits": {
-                            "description": "max resources",
-                            "type": "object",
-                            "properties": {
-                                "cpu": {
-                                    "description": "The maximum amount of cpu",
-                                    "title": "CPU",
-                                    "type": "string",
-                                    "default": "30000m",
-                                    "render": "slider",
-                                    "sliderMin": 50,
-                                    "sliderMax": 40000,
-                                    "sliderStep": 50,
-                                    "sliderUnit": "m",
-                                    "sliderExtremity": "up",
-                                    "sliderExtremitySemantic": "Maximum",
-                                    "sliderRangeId": "cpu"
-                                },
-                                "memory": {
-                                    "description": "The maximum amount of memory",
-                                    "title": "Memory",
-                                    "type": "string",
-                                    "default": "50Gi",
-                                    "render": "slider",
-                                    "sliderMin": 1,
-                                    "sliderMax": 200,
-                                    "sliderStep": 1,
-                                    "sliderUnit": "Gi",
-                                    "sliderExtremity": "up",
-                                    "sliderExtremitySemantic": "Maximum",
-                                    "sliderRangeId": "memory"
-                                }
-                            }
-                        }
-                    }
-                },
                 "security": {
                     "description": "security specific configuration",
                     "type": "object",
@@ -262,6 +186,80 @@
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "resources": {
+            "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
+            "type": "object",
+            "properties": {
+                "requests": {
+                    "description": "Guaranteed resources",
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "description": "The amount of cpu guaranteed",
+                            "title": "CPU",
+                            "type": "string",
+                            "default": "100m",
+                            "render": "slider",
+                            "sliderMin": 50,
+                            "sliderMax": 40000,
+                            "sliderStep": 50,
+                            "sliderUnit": "m",
+                            "sliderExtremity": "down",
+                            "sliderExtremitySemantic": "guaranteed",
+                            "sliderRangeId": "cpu"
+                        },
+                        "memory": {
+                            "description": "The amount of memory guaranteed",
+                            "title": "memory",
+                            "type": "string",
+                            "default": "2Gi",
+                            "render": "slider",
+                            "sliderMin": 1,
+                            "sliderMax": 200,
+                            "sliderStep": 1,
+                            "sliderUnit": "Gi",
+                            "sliderExtremity": "down",
+                            "sliderExtremitySemantic": "guaranteed",
+                            "sliderRangeId": "memory"
+                        }
+                    }
+                },
+                "limits": {
+                    "description": "max resources",
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "description": "The maximum amount of cpu",
+                            "title": "CPU",
+                            "type": "string",
+                            "default": "30000m",
+                            "render": "slider",
+                            "sliderMin": 50,
+                            "sliderMax": 40000,
+                            "sliderStep": 50,
+                            "sliderUnit": "m",
+                            "sliderExtremity": "up",
+                            "sliderExtremitySemantic": "Maximum",
+                            "sliderRangeId": "cpu"
+                        },
+                        "memory": {
+                            "description": "The maximum amount of memory",
+                            "title": "Memory",
+                            "type": "string",
+                            "default": "50Gi",
+                            "render": "slider",
+                            "sliderMin": 1,
+                            "sliderMax": 200,
+                            "sliderStep": 1,
+                            "sliderUnit": "Gi",
+                            "sliderExtremity": "up",
+                            "sliderExtremitySemantic": "Maximum",
+                            "sliderRangeId": "memory"
                         }
                     }
                 }
@@ -344,36 +342,39 @@
                 }
             }
         },
-        "securityContext": {
-            "type": "object"
-        },
         "service": {
+            "description": "Service specific configuration",
             "type": "object",
             "properties": {
                 "port": {
-                    "type": "integer"
+                    "description": "type of the service",
+                    "type": "integer",
+                    "default": 80
                 },
                 "type": {
-                    "type": "string"
-                }
-            }
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "annotations": {
-                    "type": "object"
-                },
-                "create": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
+                    "description": "port of the service",
+                    "type": "string",
+                    "default": "ClusterIP"
                 }
             }
         },
         "tolerations": {
-            "type": "array"
+            "type": "array",
+            "description": "Array of tolerations",
+            "default": [],
+            "x-onyxia": {
+                "hidden": true,
+                "overwriteDefaultWith": "region.tolerations"
+            }
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "NodeSelector",
+            "default": {},
+            "x-onyxia": {
+                "hidden": true,
+                "overwriteDefaultWith": "region.nodeSelector"
+            }
         }
     }
 }
