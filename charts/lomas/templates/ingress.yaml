@@ -33,9 +33,12 @@ spec:
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
+  {{- with .Values.ingress.tls }}
     - hosts:
-        - {{ .Values.ingress.hostname | quote }}
-{{- end }}
+      {{- range .hosts }}
+      - {{ . | quote}}
+      {{- end }}
+  {{- end}}
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
