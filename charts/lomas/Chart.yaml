@@ -26,4 +26,4 @@ appVersion: "0.0.1"
 dependencies:
   - name: lomas-server
     version: "0.0.2"
-    repository: https://dscc-admin-ch.github.io/lomas
+    repository: https://dscc-admin-ch.github.io/helm-charts
