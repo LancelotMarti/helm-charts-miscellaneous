@@ -23,7 +23,7 @@ version: 0.0.4
 # It is recommended to use it with quotes.
 appVersion: "0.0.1"
 
-# dependencies:
-#   - name: lomas-server
-#     version: "0.0.3"
-#     repository: https://dscc-admin-ch.github.io/helm-charts
+dependencies:
+  - name: lomas-server
+    version: "0.0.3"
+    repository: https://dscc-admin-ch.github.io/helm-charts
