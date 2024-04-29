@@ -17,10 +17,16 @@
                     ]
                 },
                 "repository": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "dsccadminch/lomas_server"
+                    ]
                 },
                 "tag": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "latest"
+                    ]
                 }
             }
         },
