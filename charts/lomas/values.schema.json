@@ -1,0 +1,396 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "image": {
+            "description": "image docker",
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "option when pulling the docker image",
+                    "default": "IfNotPresent",
+                    "enum": [
+                        "IfNotPresent",
+                        "Always",
+                        "Never"
+                    ]
+                },
+                "repository": {
+                    "type": "string",
+                    "enum": [
+                        "dsccadminch/lomas_server"
+                    ]
+                },
+                "tag": {
+                    "type": "string",
+                    "enum": [
+                        "latest"
+                    ]
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "form": true,
+            "title": "Ingress Details",
+            "properties": {
+                "hostname": {
+                    "type": "string",
+                    "form": true,
+                    "title": "Hostname",
+                    "x-form": {
+                        "value": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                    },
+                    "x-onyxia": {
+                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                    }
+                },
+                "ingressClassName": {
+                    "type": "string",
+                    "form": true,
+                    "title": "ingressClassName",
+                    "default": "",
+                    "x-form": {
+                        "hidden": true,
+                        "value": "{{k8s.ingressClassName}}"
+                    },
+                    "x-onyxia": {
+                        "hidden": true,
+                        "overwriteDefaultWith": "{{k8s.ingressClassName}}"
+                    }
+                },
+                "tls": {
+                    "type": "object",
+                    "properties": {
+                        "hosts": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "mongodb": {
+            "description": "mongodb database user configuration",
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "object",
+                    "description": "image specific configuration",
+                    "properties": {
+                        "tag": {
+                            "type": "string",
+                            "description": "mongodb version",
+                            "default": "6.0.9-debian-11-r5"
+                        }
+                    }
+                },
+                "auth": {
+                    "type": "object",
+                    "description": "Authentification configuration",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "add mongodb to server",
+                            "default": true
+                        },
+                        "rootUser": {
+                            "type": "string",
+                            "description": "root name",
+                            "default": "root"
+                        },
+                        "rootPassword": {
+                            "type": "string",
+                            "description": "root password",
+                            "default": "changeme",
+                            "x-form": {
+                                "value": "{{project.password}}"
+                            },
+                            "x-onyxia": {
+                                "overwriteDefaultWith": "{{project.password}}"
+                            }
+                        },
+                        "databases": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "default databases",
+                            "default": ["defaultdb"]
+                        }
+                    }
+                },
+                "persistence": {
+                    "type": "object",
+                    "description": "configuration for persistence",
+                    "properties": {
+                        "resourcePolicy": {
+                            "description": "Set this to 'keep' to disable data pvc deletion when uninstalling the chart. Subsequent installs will use the same pvc, restoring the state of the server. Note: if the runtime_args.settings.develop_mode is set to True, the server state will be reset (default datasets and budgets).",
+                            "enum": [
+                                "",
+                                "keep"
+                            ],
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Create a persistent volume",
+                        "default": true
+                    },
+                    "size": {
+                        "type": "string",
+                        "title": "Persistent volume size",
+                        "description": "Size of the persistent volume",
+                        "default": "10Gi",
+                        "form": true,
+                        "render": "slider",
+                        "sliderMin": 1,
+                        "sliderMax": 100,
+                        "sliderStep": 1,
+                        "sliderUnit": "Gi",
+                        "hidden": {
+                            "value": false,
+                            "path": "mongodb/persistence/enabled"
+                        }
+                    }
+                },
+                "security": {
+                    "description": "security specific configuration",
+                    "type": "object",
+                    "properties": {
+                        "networkPolicy": {
+                            "type": "object",
+                            "description": "Define access policy to the service",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "title": "Enable network policy",
+                                    "description": "Only pod from the same namespace will be allowed",
+                                    "default": true,
+                                    "x-form": {
+                                        "value": "{{region.defaultNetworkPolicy}}"
+                                    },
+                                    "x-onyxia": {
+                                        "overwriteDefaultWith": "region.defaultNetworkPolicy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "resources": {
+            "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
+            "type": "object",
+            "properties": {
+                "requests": {
+                    "description": "Guaranteed resources",
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "description": "The amount of cpu guaranteed",
+                            "title": "CPU",
+                            "type": "string",
+                            "default": "100m",
+                            "render": "slider",
+                            "sliderMin": 50,
+                            "sliderMax": 40000,
+                            "sliderStep": 50,
+                            "sliderUnit": "m",
+                            "sliderExtremity": "down",
+                            "sliderExtremitySemantic": "guaranteed",
+                            "sliderRangeId": "cpu"
+                        },
+                        "memory": {
+                            "description": "The amount of memory guaranteed",
+                            "title": "memory",
+                            "type": "string",
+                            "default": "2Gi",
+                            "render": "slider",
+                            "sliderMin": 1,
+                            "sliderMax": 200,
+                            "sliderStep": 1,
+                            "sliderUnit": "Gi",
+                            "sliderExtremity": "down",
+                            "sliderExtremitySemantic": "guaranteed",
+                            "sliderRangeId": "memory"
+                        }
+                    }
+                },
+                "limits": {
+                    "description": "max resources",
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "description": "The maximum amount of cpu",
+                            "title": "CPU",
+                            "type": "string",
+                            "default": "30000m",
+                            "render": "slider",
+                            "sliderMin": 50,
+                            "sliderMax": 40000,
+                            "sliderStep": 50,
+                            "sliderUnit": "m",
+                            "sliderExtremity": "up",
+                            "sliderExtremitySemantic": "Maximum",
+                            "sliderRangeId": "cpu"
+                        },
+                        "memory": {
+                            "description": "The maximum amount of memory",
+                            "title": "Memory",
+                            "type": "string",
+                            "default": "50Gi",
+                            "render": "slider",
+                            "sliderMin": 1,
+                            "sliderMax": 200,
+                            "sliderStep": 1,
+                            "sliderUnit": "Gi",
+                            "sliderExtremity": "up",
+                            "sliderExtremitySemantic": "Maximum",
+                            "sliderRangeId": "memory"
+                        }
+                    }
+                }
+            }
+        },
+        "runtime_args": {
+            "type": "object",
+            "properties": {
+                "settings": {
+                    "type": "object",
+                    "properties": {
+                        "dataset_store": {
+                            "type": "object",
+                            "description": "dataset store configuration",
+                            "properties": {
+                                "ds_store_type": {
+                                    "description": "The type of dataset store.",
+                                    "enum": [
+                                        "basic",
+                                        "LRU_cache"
+                                    ],
+                                    "type": "string",
+                                    "default": "LRU_cache"
+                                },
+                                "max_memory_usage": {
+                                    "description": "Max memory usage of dataset store. Only useful for LRU_cache type.",
+                                    "type": "integer",
+                                    "default": 512
+                                }
+                            }
+                        },
+                        "develop_mode": {
+                            "description": "When True, service database is reset to default user and dataset collections.",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "submit_limit": {
+                            "description": "Currently unused, maximum query rate",
+                            "type": "integer",
+                            "default": 300
+                        },
+                        "server": {
+                            "type": "object",
+                            "description": "server configuration",
+                            "properties": {
+                                "time_attack": {
+                                    "type": "object",
+                                    "description": "methods to avoid time side channel attack",
+                                    "properties": {
+                                        "magnitude": {
+                                            "type": "integer",
+                                            "description": "Noise magnitude",
+                                            "default": 1
+                                        },
+                                        "method": {
+                                            "enum": [
+                                                "jitter",
+                                                "stall"
+                                            ],
+                                            "type": "string",
+                                            "description": "method for noise addition",
+                                            "default": "jitter"
+                                        }
+                                    }
+                                },
+                                "host_ip": {
+                                    "type": "string",
+                                    "description": "ip host of server",
+                                    "default": "0.0.0.0"
+                                },
+                                "host_port": {
+                                    "type": "string",
+                                    "description": "port of server",
+                                    "default": "80"
+                                },
+                                "log_level": {
+                                    "enum": [
+                                        "notset",
+                                        "debug",
+                                        "info",
+                                        "warning",
+                                        "error",
+                                        "critical"
+                                    ],
+                                    "type": "string",
+                                    "description": "level of verbosity",
+                                    "default": "info"
+                                },
+                                "reload": {
+                                    "type": "boolean",
+                                    "description": "automatic reload of server",
+                                    "default": true
+                                },
+                                "workers": {
+                                    "type": "integer",
+                                    "description": "number of workers",
+                                    "default": 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "service": {
+            "description": "Service specific configuration",
+            "type": "object",
+            "properties": {
+                "port": {
+                    "description": "type of the service",
+                    "type": "integer",
+                    "default": 80
+                },
+                "type": {
+                    "description": "port of the service",
+                    "type": "string",
+                    "default": "ClusterIP"
+                }
+            }
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Array of tolerations",
+            "default": [],
+            "x-onyxia": {
+                "hidden": true,
+                "overwriteDefaultWith": "region.tolerations"
+            }
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "NodeSelector",
+            "default": {},
+            "x-onyxia": {
+                "hidden": true,
+                "overwriteDefaultWith": "region.nodeSelector"
+            }
+        }
+    }
+}
