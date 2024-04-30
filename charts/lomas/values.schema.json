@@ -48,12 +48,11 @@
                                 "properties": {
                                     "host": {
                                         "type": "string",
-                                        "title": "Hostname",
                                         "x-form": {
-                                            "value": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
+                                            "value": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
                                         },
                                         "x-onyxia": {
-                                            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
+                                            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
                                         }
                                     },
                                     "paths": {
