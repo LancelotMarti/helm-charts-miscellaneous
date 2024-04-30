@@ -39,15 +39,37 @@
                     "form": true,
                     "title": "Ingress Details",
                     "properties": {
-                        "hostname": {
-                            "type": "string",
-                            "form": true,
-                            "title": "Hostname",
-                            "x-form": {
-                                "value": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
-                            },
-                            "x-onyxia": {
-                                "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
+                        "hosts": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "host": {
+                                        "type": "string",
+                                        "x-form": {
+                                            "value": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                                        },
+                                        "x-onyxia": {
+                                            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                                        }
+                                    },
+                                    "paths": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "path": {
+                                                    "type": "string",
+                                                    "default": "/"
+                                                },
+                                                "pathType": {
+                                                    "type": "string",
+                                                    "default": "Prefix"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         },
                         "ingressClassName": {
