@@ -6,6 +6,12 @@
             "description": "Configuration",
             "type": "object",
             "properties": {
+                "affinity": {
+                    "type": "object"
+                },
+                "fullnameOverride": {
+                    "type": "string"
+                },
                 "image": {
                     "description": "image docker",
                     "type": "object",
@@ -36,11 +42,39 @@
                         }
                     }
                 },
+                "imagePullSecrets": {
+                    "type": "array"
+                },
                 "ingress": {
                     "type": "object",
                     "form": true,
                     "title": "Ingress Details",
                     "properties": {
+                        "annotations": {
+                            "type": "object",
+                            "properties": {
+                                "nginx.ingress.kubernetes.io/proxy-read-timeout": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "className": {
+                            "type": "string",
+                            "form": true,
+                            "title": "ingressClassName",
+                            "default": "",
+                            "x-form": {
+                                "hidden": true,
+                                "value": "{{k8s.ingressClassName}}"
+                            },
+                            "x-onyxia": {
+                                "hidden": true,
+                                "overwriteDefaultWith": "{{k8s.ingressClassName}}"
+                            }
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
                         "hosts": {
                             "type": "array",
                             "items": {
@@ -74,20 +108,6 @@
                                 }
                             }
                         },
-                        "ingressClassName": {
-                            "type": "string",
-                            "form": true,
-                            "title": "ingressClassName",
-                            "default": "",
-                            "x-form": {
-                                "hidden": true,
-                                "value": "{{k8s.ingressClassName}}"
-                            },
-                            "x-onyxia": {
-                                "hidden": true,
-                                "overwriteDefaultWith": "{{k8s.ingressClassName}}"
-                            }
-                        },
                         "tls": {
                             "type": "object",
                             "properties": {
@@ -111,30 +131,27 @@
                     "description": "mongodb database user configuration",
                     "type": "object",
                     "properties": {
-                        "image": {
-                            "type": "object",
-                            "description": "image specific configuration",
-                            "properties": {
-                                "tag": {
-                                    "type": "string",
-                                    "description": "mongodb version",
-                                    "default": "6.0.9-debian-11-r5"
-                                }
-                            }
+                        "architecture": {
+                            "type": "string"
                         },
                         "auth": {
                             "type": "object",
                             "description": "Authentification configuration",
                             "properties": {
+                                "databases": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "default databases",
+                                    "default": [
+                                        "defaultdb"
+                                    ]
+                                },
                                 "enabled": {
                                     "type": "boolean",
                                     "description": "add mongodb to server",
                                     "default": true
-                                },
-                                "rootUser": {
-                                    "type": "string",
-                                    "description": "root name",
-                                    "default": "root"
                                 },
                                 "rootPassword": {
                                     "type": "string",
@@ -147,15 +164,32 @@
                                         "overwriteDefaultWith": "{{project.password}}"
                                     }
                                 },
-                                "databases": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "description": "default databases",
-                                    "default": [
-                                        "defaultdb"
-                                    ]
+                                "rootUser": {
+                                    "type": "string",
+                                    "description": "root name",
+                                    "default": "root"
+                                }
+                            }
+                        },
+                        "discoverable": {
+                            "type": "object",
+                            "properties": {
+                                "allow": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
+                        "fullnameOverride": {
+                            "type": "string"
+                        },
+                        "image": {
+                            "type": "object",
+                            "description": "image specific configuration",
+                            "properties": {
+                                "tag": {
+                                    "type": "string",
+                                    "description": "mongodb version",
+                                    "default": "6.0.9-debian-11-r5"
                                 }
                             }
                         },
@@ -195,13 +229,19 @@
                                 }
                             }
                         },
+                        "replicaCount": {
+                            "type": "integer"
+                        },
+                        "resources": {
+                            "type": "object"
+                        },
                         "security": {
                             "description": "security specific configuration",
                             "type": "object",
                             "properties": {
                                 "networkPolicy": {
-                                    "type": "object",
                                     "description": "Define access policy to the service",
+                                    "type": "object",
                                     "properties": {
                                         "enabled": {
                                             "type": "boolean",
@@ -220,6 +260,27 @@
                             }
                         }
                     }
+                },
+                "nameOverride": {
+                    "type": "string"
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "NodeSelector",
+                    "default": {},
+                    "x-onyxia": {
+                        "hidden": true,
+                        "overwriteDefaultWith": "region.nodeSelector"
+                    }
+                },
+                "podAnnotations": {
+                    "type": "object"
+                },
+                "podSecurityContext": {
+                    "type": "object"
+                },
+                "replicaCount": {
+                    "type": "integer"
                 },
                 "resources": {
                     "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
@@ -394,6 +455,9 @@
                         }
                     }
                 },
+                "securityContext": {
+                    "type": "object"
+                },
                 "service": {
                     "description": "Service specific configuration",
                     "type": "object",
@@ -410,6 +474,20 @@
                         }
                     }
                 },
+                "serviceAccount": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": "object"
+                        },
+                        "create": {
+                            "type": "boolean"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "tolerations": {
                     "type": "array",
                     "description": "Array of tolerations",
@@ -417,15 +495,6 @@
                     "x-onyxia": {
                         "hidden": true,
                         "overwriteDefaultWith": "region.tolerations"
-                    }
-                },
-                "nodeSelector": {
-                    "type": "object",
-                    "description": "NodeSelector",
-                    "default": {},
-                    "x-onyxia": {
-                        "hidden": true,
-                        "overwriteDefaultWith": "region.nodeSelector"
                     }
                 }
             }
