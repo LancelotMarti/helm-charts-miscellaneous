@@ -24,13 +24,15 @@
                             "type": "string",
                             "enum": [
                                 "dsccadminch/lomas_server"
-                            ]
+                            ],
+                            "default": "dsccadminch/lomas_server"
                         },
                         "tag": {
                             "type": "string",
                             "enum": [
                                 "latest"
-                            ]
+                            ],
+                            "default": "latest"
                         }
                     }
                 },
@@ -39,15 +41,38 @@
                     "form": true,
                     "title": "Ingress Details",
                     "properties": {
-                        "hostname": {
-                            "type": "string",
-                            "form": true,
-                            "title": "Hostname",
-                            "x-form": {
-                                "value": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
-                            },
-                            "x-onyxia": {
-                                "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
+                        "hosts": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "host": {
+                                        "type": "string",
+                                        "title": "Hostname",
+                                        "x-form": {
+                                            "value": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
+                                        },
+                                        "x-onyxia": {
+                                            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
+                                        }
+                                    },
+                                    "paths": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "path": {
+                                                    "type": "string",
+                                                    "default": "/"
+                                                },
+                                                "pathType": {
+                                                    "type": "string",
+                                                    "default": "Prefix"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         },
                         "ingressClassName": {
@@ -71,6 +96,12 @@
                                     "type": "array",
                                     "items": {
                                         "type": "string"
+                                    },
+                                    "x-form": {
+                                        "value": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
+                                    },
+                                    "x-onyxia": {
+                                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-{{k8s.domain}}"
                                     }
                                 }
                             }
@@ -123,7 +154,9 @@
                                         "type": "string"
                                     },
                                     "description": "default databases",
-                                    "default": ["defaultdb"]
+                                    "default": [
+                                        "defaultdb"
+                                    ]
                                 }
                             }
                         },
