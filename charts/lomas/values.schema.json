@@ -285,7 +285,7 @@
                                 "develop_mode": {
                                     "description": "When True, service database is reset to default user and dataset collections.",
                                     "type": "boolean",
-                                    "default": false
+                                    "default": true
                                 },
                                 "submit_limit": {
                                     "description": "Currently unused, maximum query rate",
@@ -342,7 +342,7 @@
                                         "reload": {
                                             "type": "boolean",
                                             "description": "automatic reload of server",
-                                            "default": true
+                                            "default": false
                                         },
                                         "workers": {
                                             "type": "integer",
