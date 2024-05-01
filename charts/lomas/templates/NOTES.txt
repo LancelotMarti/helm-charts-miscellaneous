@@ -1,1 +1,3 @@
-- TODO : see if creating a discovery-secret.yaml is necessary
+{{- if .Values.ingress.enabled }}
+- Your server will be accessible following this [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
+{{- end }}
