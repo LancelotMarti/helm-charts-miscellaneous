@@ -22,12 +22,14 @@
                         },
                         "repository": {
                             "type": "string",
+                            "default": "dsccadminch/lomas_server",
                             "enum": [
                                 "dsccadminch/lomas_server"
                             ]
                         },
                         "tag": {
                             "type": "string",
+                            "default": "latest",
                             "enum": [
                                 "latest"
                             ]
@@ -39,39 +41,19 @@
                     "form": true,
                     "title": "Ingress Details",
                     "properties": {
-                        "hosts": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "host": {
-                                        "type": "string",
-                                        "x-form": {
-                                            "value": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
-                                        },
-                                        "x-onyxia": {
-                                            "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
-                                        }
-                                    },
-                                    "paths": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "path": {
-                                                    "type": "string",
-                                                    "default": "/"
-                                                },
-                                                "pathType": {
-                                                    "type": "string",
-                                                    "default": "Prefix"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                        "hostname":{
+                            "type":"string",
+                            "form":true,
+                            "title":"Hostname",
+                            "x-form":{
+                              "hidden": true,
+                              "value":"{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                            },
+                            "x-onyxia": {
+                              "hidden": true,
+                              "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
                             }
-                        },
+                          },
                         "ingressClassName": {
                             "type": "string",
                             "form": true,
@@ -84,17 +66,6 @@
                             "x-onyxia": {
                                 "hidden": true,
                                 "overwriteDefaultWith": "{{k8s.ingressClassName}}"
-                            }
-                        },
-                        "tls": {
-                            "type": "object",
-                            "properties": {
-                                "hosts": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                }
                             }
                         }
                     }
