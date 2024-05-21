@@ -1,6 +1,7 @@
 apiVersion: v2
 name: lomas-server
 description: Lomas is a remote access platform developed by the Swiss Federal Statistical Office allowing National Statistical Offices to offer eyes-off data science on private datasets while controlling disclosure risk. The platform relies on a service that is meant to be deployed on-premises and allows accredited users to apply differentially private algorithms on private datasets using a dedicated client Python library.
+icon: https://raw.githubusercontent.com/dscc-admin-ch/lomas/develop/images/lomas_logo.svg
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -15,7 +16,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.0.17
+version: 0.0.18
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
