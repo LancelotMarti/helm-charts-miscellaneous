@@ -12,14 +12,12 @@
                         "affinity": {
                             "type": "object",
                             "default": {},
-                            "hidden": {
-                                "value": false
-                            }
+                            "abc": false
                         },
                         "create": {
                             "type": "boolean",
                             "default": true,
-                            "form": false
+                            "abc": false
                         },
                         "image": {
                             "description": "Docker Image",
@@ -54,14 +52,14 @@
                         "imagePullSecrets": {
                             "type": "array",
                             "default": [],
-                            "form": false
+                            "abc": false
                         },
                         "ingress": {
                             "type": "object",
                             "properties": {
                                 "annotations": {
                                     "type": "object",
-                                    "form": false,
+                                    "abc": false,
                                     "properties": {
                                         "nginx.ingress.kubernetes.io/proxy-read-timeout": {
                                             "type": "string",
@@ -72,12 +70,12 @@
                                 "className": {
                                     "type": "string",
                                     "default": "nginx",
-                                    "form": false
+                                    "abc": false
                                 },
                                 "enabled": {
                                     "type": "boolean",
                                     "default": true,
-                                    "form": false
+                                    "abc": false
                                 },
                                 "hostname": {
                                     "type": "string",
@@ -92,17 +90,17 @@
                         "podAnnotations": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "podSecurityContext": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "replicaCount": {
                             "type": "integer",
                             "default": 1,
-                            "form": false
+                            "abc": false
                         },
                         "resources": {
                             "type": "object",
@@ -189,7 +187,7 @@
                         "securityContext": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "serverConfig": {
                             "type": "object",
@@ -197,12 +195,12 @@
                                 "address": {
                                     "type": "string",
                                     "default": "0.0.0.0",
-                                    "form": false
+                                    "abc": false
                                 },
                                 "port": {
                                     "type": "string",
                                     "default": "8501",
-                                    "form": false
+                                    "abc": false
                                 }
                             }
                         },
@@ -219,7 +217,7 @@
                                     "description": "type of the service",
                                     "type": "string",
                                     "default": "ClusterIP",
-                                    "form": false
+                                    "abc": false
                                 }
                             }
                         },
@@ -243,7 +241,7 @@
                         },
                         "serviceAccount": {
                             "type": "object",
-                            "form": false,
+                            "abc": false,
                             "properties": {
                                 "annotations": {
                                     "type": "object"
@@ -272,7 +270,7 @@
                         "architecture": {
                             "type": "string",
                             "default": "standalone",
-                            "form": false
+                            "abc": false
                         },
                         "auth": {
                             "type": "object",
@@ -308,7 +306,7 @@
                         },
                         "discoverable": {
                             "type": "object",
-                            "form": false,
+                            "abc": false,
                             "properties": {
                                 "allow": {
                                     "type": "boolean",
@@ -363,7 +361,7 @@
                                 "sliderMax": 100,
                                 "sliderStep": 1,
                                 "sliderUnit": "Gi",
-                                "form": {
+                                "abc": {
                                     "value": false,
                                     "path": "mongodb/persistence/enabled"
                                 }
@@ -372,12 +370,12 @@
                         "replicaCount": {
                             "type": "integer",
                             "default": 1,
-                            "form": false
+                            "abc": false
                         },
                         "resources": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "security": {
                             "description": "security specific configuration",
@@ -405,7 +403,7 @@
                 "nameOverride": {
                     "type": "string",
                     "default": "",
-                    "form": false
+                    "abc": false
                 },
                 "server": {
                     "title": "Server Configuration",
@@ -414,7 +412,7 @@
                         "affinity": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "image": {
                             "description": "Docker Image",
@@ -449,14 +447,14 @@
                         "imagePullSecrets": {
                             "type": "array",
                             "default": [],
-                            "form": false
+                            "abc": false
                         },
                         "ingress": {
                             "type": "object",
                             "properties": {
                                 "annotations": {
                                     "type": "object",
-                                    "form": false,
+                                    "abc": false,
                                     "properties": {
                                         "nginx.ingress.kubernetes.io/proxy-read-timeout": {
                                             "type": "string",
@@ -467,12 +465,12 @@
                                 "className": {
                                     "type": "string",
                                     "default": "nginx",
-                                    "form": false
+                                    "abc": false
                                 },
                                 "enabled": {
                                     "type": "boolean",
                                     "default": true,
-                                    "form": false
+                                    "abc": false
                                 },
                                 "hostname": {
                                     "type": "string",
@@ -487,17 +485,17 @@
                         "podAnnotations": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "podSecurityContext": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "replicaCount": {
                             "type": "integer",
                             "default": 1,
-                            "form": false
+                            "abc": false
                         },
                         "resources": {
                             "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
@@ -616,7 +614,7 @@
                                             "description": "Currently unused, maximum query rate",
                                             "type": "integer",
                                             "default": 300,
-                                            "form": false
+                                            "abc": false
                                         },
                                         "server": {
                                             "type": "object",
@@ -674,7 +672,7 @@
                                                     "type": "integer",
                                                     "description": "number of workers",
                                                     "default": 1,
-                                                    "form": false
+                                                    "abc": false
                                                 }
                                             }
                                         }
@@ -685,7 +683,7 @@
                         "securityContext": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "abc": false
                         },
                         "service": {
                             "description": "Service specific configuration",
@@ -700,7 +698,7 @@
                                     "description": "type of the service",
                                     "type": "string",
                                     "default": "ClusterIP",
-                                    "form": false
+                                    "abc": false
                                 }
                             }
                         },
@@ -724,7 +722,7 @@
                         },
                         "serviceAccount": {
                             "type": "object",
-                            "form": false,
+                            "abc": false,
                             "properties": {
                                 "annotations": {
                                     "type": "object"
