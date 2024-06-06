@@ -59,11 +59,11 @@
                             "properties": {
                                 "annotations": {
                                     "type": "object",
+                                    "hidden": true,
                                     "properties": {
                                         "nginx.ingress.kubernetes.io/proxy-read-timeout": {
                                             "type": "string",
-                                            "default": "3600",
-                                            "hidden": true
+                                            "default": "3600"
                                         }
                                     }
                                 },
@@ -81,8 +81,8 @@
                                     "type": "string",
                                     "title":"Hostname",
                                     "x-onyxia": {
-                                    "hidden": true,
-                                    "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-admin-dashboard-{{k8s.domain}}"
+                                        "hidden": true,
+                                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-admin-dashboard-{{k8s.domain}}"
                                     }
                                 }
                             }
@@ -454,11 +454,11 @@
                             "properties": {
                                 "annotations": {
                                     "type": "object",
+                                    "hidden": true,
                                     "properties": {
                                         "nginx.ingress.kubernetes.io/proxy-read-timeout": {
                                             "type": "string",
-                                            "default": "3600",
-                                            "hidden": true
+                                            "default": "3600"
                                         }
                                     }
                                 },
@@ -476,8 +476,8 @@
                                     "type": "string",
                                     "title":"Hostname",
                                     "x-onyxia": {
-                                    "hidden": true,
-                                    "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-server-{{k8s.domain}}"
+                                        "hidden": true,
+                                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-server-{{k8s.domain}}"
                                     }
                                 }
                             }
