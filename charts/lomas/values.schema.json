@@ -12,7 +12,7 @@
                         "affinity": {
                             "type": "object",
                             "default": {},
-                            "form": false
+                            "hidden": false
                         },
                         "create": {
                             "type": "boolean",
