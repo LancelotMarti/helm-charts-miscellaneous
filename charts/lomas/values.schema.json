@@ -241,14 +241,14 @@
                         },
                         "serviceAccount": {
                             "type": "object",
+                            "hidden": true,
                             "properties": {
                                 "annotations": {
                                     "type": "object"
                                 },
                                 "create": {
                                     "type": "boolean",
-                                    "default": false,
-                                    "hidden": true
+                                    "default": false
                                 },
                                 "name": {
                                     "type": "string"
@@ -306,11 +306,11 @@
                         },
                         "discoverable": {
                             "type": "object",
+                            "hidden": true,
                             "properties": {
                                 "allow": {
                                     "type": "boolean",
-                                    "default": true,
-                                    "hidden": true
+                                    "default": true
                                 }
                             }
                         },
@@ -722,14 +722,14 @@
                         },
                         "serviceAccount": {
                             "type": "object",
+                            "hidden": true,
                             "properties": {
                                 "annotations": {
                                     "type": "object"
                                 },
                                 "create": {
                                     "type": "boolean",
-                                    "default": false,
-                                    "hidden": true
+                                    "default": false
                                 },
                                 "name": {
                                     "type": "string"
