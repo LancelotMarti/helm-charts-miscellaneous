@@ -79,12 +79,7 @@
                                 },
                                 "hostname": {
                                     "type": "string",
-                                    "hidden": false,
                                     "title":"Hostname",
-                                    "x-form":{
-                                    "hidden": true,
-                                    "value":"{{project.id}}-{{k8s.randomSubdomain}}-lomas-admin-dashboard-{{k8s.domain}}"
-                                    },
                                     "x-onyxia": {
                                     "hidden": true,
                                     "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-admin-dashboard-{{k8s.domain}}"
@@ -264,10 +259,6 @@
                 },
                 "fullnameOverride": {
                     "type": "string",
-                    "x-form": {
-                        "hidden": true,
-                        "overwriteDefaultWith":"{{project.id}}-{{k8s.randomSubdomain}}-lomas"
-                    },
                     "x-onyxia": {
                         "hidden": true,
                         "overwriteDefaultWith":"{{project.id}}-{{k8s.randomSubdomain}}-lomas"
@@ -299,9 +290,6 @@
                                     "type": "string",
                                     "description": "root password",
                                     "default": "changeme",
-                                    "x-form": {
-                                        "value": "{{project.password}}"
-                                    },
                                     "x-onyxia": {
                                         "overwriteDefaultWith": "{{project.password}}"
                                     }
@@ -328,10 +316,6 @@
                         },
                         "fullnameOverride": {
                             "type": "string",
-                            "x-form": {
-                                "hidden": "true",
-                                "overwriteDefaultWith":"{{project.id}}-{{k8s.randomSubdomain}}-lomas-mongodb"
-                            },
                             "x-onyxia": {
                                 "hidden": true,
                                 "overwriteDefaultWith":"{{project.id}}-{{k8s.randomSubdomain}}-lomas-mongodb"
@@ -372,7 +356,6 @@
                                 "title": "Persistent volume size",
                                 "description": "Size of the persistent volume",
                                 "default": "10Gi",
-                                "hidden": false,
                                 "render": "slider",
                                 "sliderMin": 1,
                                 "sliderMax": 100,
@@ -407,9 +390,6 @@
                                             "title": "Enable network policy",
                                             "description": "Only pod from the same namespace will be allowed",
                                             "default": true,
-                                            "x-form": {
-                                                "value": "{{region.defaultNetworkPolicy}}"
-                                            },
                                             "x-onyxia": {
                                                 "overwriteDefaultWith": "region.defaultNetworkPolicy"
                                             }
@@ -494,12 +474,7 @@
                                 },
                                 "hostname": {
                                     "type": "string",
-                                    "hidden": false,
                                     "title":"Hostname",
-                                    "x-form":{
-                                    "hidden": true,
-                                    "value":"{{project.id}}-{{k8s.randomSubdomain}}-lomas-server-{{k8s.domain}}"
-                                    },
                                     "x-onyxia": {
                                     "hidden": true,
                                     "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-server-{{k8s.domain}}"
