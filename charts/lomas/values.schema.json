@@ -12,7 +12,7 @@
                         "affinity": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "create": {
                             "type": "boolean",
@@ -52,14 +52,14 @@
                         "imagePullSecrets": {
                             "type": "array",
                             "default": [],
-                            "hidden": true
+                            "hidden": false
                         },
                         "ingress": {
                             "type": "object",
                             "properties": {
                                 "annotations": {
                                     "type": "object",
-                                    "hidden": true,
+                                    "hidden": false,
                                     "properties": {
                                         "nginx.ingress.kubernetes.io/proxy-read-timeout": {
                                             "type": "string",
@@ -70,7 +70,7 @@
                                 "className": {
                                     "type": "string",
                                     "default": "nginx",
-                                    "hidden": true
+                                    "hidden": false
                                 },
                                 "enabled": {
                                     "type": "boolean",
@@ -81,7 +81,7 @@
                                     "type": "string",
                                     "title":"Hostname",
                                     "x-onyxia": {
-                                        "hidden": true,
+                                        "hidden": false,
                                         "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-admin-dashboard-{{k8s.domain}}"
                                     }
                                 }
@@ -90,17 +90,17 @@
                         "podAnnotations": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "podSecurityContext": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "replicaCount": {
                             "type": "integer",
                             "default": 1,
-                            "hidden": true
+                            "hidden": false
                         },
                         "resources": {
                             "type": "object",
@@ -187,7 +187,7 @@
                         "securityContext": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "serverConfig": {
                             "type": "object",
@@ -217,7 +217,7 @@
                                     "description": "type of the service",
                                     "type": "string",
                                     "default": "ClusterIP",
-                                    "hidden": true
+                                    "hidden": false
                                 }
                             }
                         },
@@ -226,7 +226,7 @@
                             "description": "Array of tolerations",
                             "default": [],
                             "x-onyxia": {
-                                "hidden": true,
+                                "hidden": false,
                                 "overwriteDefaultWith": "region.tolerations"
                             }
                         },
@@ -235,13 +235,13 @@
                             "description": "NodeSelector",
                             "default": {},
                             "x-onyxia": {
-                                "hidden": true,
+                                "hidden": false,
                                 "overwriteDefaultWith": "region.nodeSelector"
                             }
                         },
                         "serviceAccount": {
                             "type": "object",
-                            "hidden": true,
+                            "hidden": false,
                             "properties": {
                                 "annotations": {
                                     "type": "object"
@@ -260,7 +260,7 @@
                 "fullnameOverride": {
                     "type": "string",
                     "x-onyxia": {
-                        "hidden": true,
+                        "hidden": false,
                         "overwriteDefaultWith":"{{project.id}}-{{k8s.randomSubdomain}}-lomas"
                     }
                 },
@@ -270,7 +270,7 @@
                         "architecture": {
                             "type": "string",
                             "default": "standalone",
-                            "hidden": true
+                            "hidden": false
                         },
                         "auth": {
                             "type": "object",
@@ -306,7 +306,7 @@
                         },
                         "discoverable": {
                             "type": "object",
-                            "hidden": true,
+                            "hidden": false,
                             "properties": {
                                 "allow": {
                                     "type": "boolean",
@@ -317,7 +317,7 @@
                         "fullnameOverride": {
                             "type": "string",
                             "x-onyxia": {
-                                "hidden": true,
+                                "hidden": false,
                                 "overwriteDefaultWith":"{{project.id}}-{{k8s.randomSubdomain}}-lomas-mongodb"
                             }
                         },
@@ -370,12 +370,12 @@
                         "replicaCount": {
                             "type": "integer",
                             "default": 1,
-                            "hidden": true
+                            "hidden": false
                         },
                         "resources": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "security": {
                             "description": "security specific configuration",
@@ -403,7 +403,7 @@
                 "nameOverride": {
                     "type": "string",
                     "default": "",
-                    "hidden": true
+                    "hidden": false
                 },
                 "server": {
                     "title": "Server Configuration",
@@ -412,7 +412,7 @@
                         "affinity": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "image": {
                             "description": "Docker Image",
@@ -447,14 +447,14 @@
                         "imagePullSecrets": {
                             "type": "array",
                             "default": [],
-                            "hidden": true
+                            "hidden": false
                         },
                         "ingress": {
                             "type": "object",
                             "properties": {
                                 "annotations": {
                                     "type": "object",
-                                    "hidden": true,
+                                    "hidden": false,
                                     "properties": {
                                         "nginx.ingress.kubernetes.io/proxy-read-timeout": {
                                             "type": "string",
@@ -465,7 +465,7 @@
                                 "className": {
                                     "type": "string",
                                     "default": "nginx",
-                                    "hidden": true
+                                    "hidden": false
                                 },
                                 "enabled": {
                                     "type": "boolean",
@@ -476,7 +476,7 @@
                                     "type": "string",
                                     "title":"Hostname",
                                     "x-onyxia": {
-                                        "hidden": true,
+                                        "hidden": false,
                                         "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-lomas-server-{{k8s.domain}}"
                                     }
                                 }
@@ -485,17 +485,17 @@
                         "podAnnotations": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "podSecurityContext": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "replicaCount": {
                             "type": "integer",
                             "default": 1,
-                            "hidden": true
+                            "hidden": false
                         },
                         "resources": {
                             "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
@@ -614,7 +614,7 @@
                                             "description": "Currently unused, maximum query rate",
                                             "type": "integer",
                                             "default": 300,
-                                            "hidden": true
+                                            "hidden": false
                                         },
                                         "server": {
                                             "type": "object",
@@ -672,7 +672,7 @@
                                                     "type": "integer",
                                                     "description": "number of workers",
                                                     "default": 1,
-                                                    "hidden": true
+                                                    "hidden": false
                                                 }
                                             }
                                         }
@@ -683,7 +683,7 @@
                         "securityContext": {
                             "type": "object",
                             "default": {},
-                            "hidden": true
+                            "hidden": false
                         },
                         "service": {
                             "description": "Service specific configuration",
@@ -698,7 +698,7 @@
                                     "description": "type of the service",
                                     "type": "string",
                                     "default": "ClusterIP",
-                                    "hidden": true
+                                    "hidden": false
                                 }
                             }
                         },
@@ -707,7 +707,7 @@
                             "description": "Array of tolerations",
                             "default": [],
                             "x-onyxia": {
-                                "hidden": true,
+                                "hidden": false,
                                 "overwriteDefaultWith": "region.tolerations"
                             }
                         },
@@ -716,13 +716,13 @@
                             "description": "NodeSelector",
                             "default": {},
                             "x-onyxia": {
-                                "hidden": true,
+                                "hidden": false,
                                 "overwriteDefaultWith": "region.nodeSelector"
                             }
                         },
                         "serviceAccount": {
                             "type": "object",
-                            "hidden": true,
+                            "hidden": false,
                             "properties": {
                                 "annotations": {
                                     "type": "object"
