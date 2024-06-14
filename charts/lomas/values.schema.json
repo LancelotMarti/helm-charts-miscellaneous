@@ -686,15 +686,18 @@
                                                     "properties": {
                                                         "contrib": {
                                                             "description": "Enable contrib feature",
-                                                            "type": "boolean"
+                                                            "type": "boolean",
+                                                            "default": true
                                                         },
                                                         "floating_point": {
                                                             "description": "Enable floating-point feature",
-                                                            "type": "boolean"
+                                                            "type": "boolean",
+                                                            "default": true
                                                         },
                                                         "honest_but_curious": {
                                                             "description": "Enable honest-but-curious feature",
-                                                            "type": "boolean"
+                                                            "type": "boolean",
+                                                            "default": true
                                                         }
                                                     }
                                                 }
