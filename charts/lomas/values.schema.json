@@ -26,7 +26,7 @@
                                 "pullPolicy": {
                                     "type": "string",
                                     "description": "option when pulling the docker image",
-                                    "default": "IfNotPresent",
+                                    "default": "Always",
                                     "enum": [
                                         "IfNotPresent",
                                         "Always",
@@ -42,9 +42,10 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "latest",
+                                    "default": "0.1.2",
                                     "enum": [
-                                        "latest"
+                                        "latest",
+                                        "0.1.2"
                                     ]
                                 }
                             }
@@ -421,7 +422,7 @@
                                 "pullPolicy": {
                                     "type": "string",
                                     "description": "option when pulling the docker image",
-                                    "default": "IfNotPresent",
+                                    "default": "Always",
                                     "enum": [
                                         "IfNotPresent",
                                         "Always",
@@ -437,9 +438,10 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "latest",
+                                    "default": "0.1.2",
                                     "enum": [
-                                        "latest"
+                                        "latest",
+                                        "0.1.2"
                                     ]
                                 }
                             }
@@ -673,6 +675,33 @@
                                                     "description": "number of workers",
                                                     "default": 1,
                                                     "abc": false
+                                                }
+                                            }
+                                        },
+                                        "dp_libraries": {
+                                            "description": "Settings for DP libraries",
+                                            "type": "object",
+                                            "properties": {
+                                                "opendp": {
+                                                    "description": "Settings for opendp library",
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "contrib": {
+                                                            "description": "Enable contrib feature",
+                                                            "type": "boolean",
+                                                            "default": true
+                                                        },
+                                                        "floating_point": {
+                                                            "description": "Enable floating-point feature",
+                                                            "type": "boolean",
+                                                            "default": true
+                                                        },
+                                                        "honest_but_curious": {
+                                                            "description": "Enable honest-but-curious feature",
+                                                            "type": "boolean",
+                                                            "default": true
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
