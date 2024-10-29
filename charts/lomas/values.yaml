@@ -10,6 +10,9 @@ lomas-server:
   mongodb:
     resources: {}
     fullnameOverride: "lomas-mongodb"
+    max_pool_size: 100
+    min_pool_size: 2
+    max_connecting: 2
     architecture: standalone
     image:
       tag: "6.0.9-debian-11-r5"
@@ -66,8 +69,7 @@ lomas-server:
             contrib: True
             floating_point: True
             honest_but_curious: True
-
-
+        private_db_credentials: [] # list of credentials, eg. {credentials_name: "abc", db_type: "S3_DB", ...}
 
     service:
       type: ClusterIP
