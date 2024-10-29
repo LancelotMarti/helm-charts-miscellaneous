@@ -42,10 +42,10 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.1",
+                                    "default": "0.3.4",
                                     "enum": [
                                         "latest",
-                                        "0.3.1"
+                                        "0.3.4"
                                     ]
                                 }
                             }
@@ -450,10 +450,10 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.1",
+                                    "default": "0.3.4",
                                     "enum": [
                                         "latest",
-                                        "0.3.1"
+                                        "0.3.4"
                                     ]
                                 }
                             }
