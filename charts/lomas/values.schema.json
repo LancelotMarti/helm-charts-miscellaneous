@@ -42,11 +42,11 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.4",
+                                    "default": "0.3.5",
                                     "enum": [
                                         "latest",
                                         "0.3.1",
-                                        "0.3.4"
+                                        "0.3.5"
                                     ]
                                 }
                             }
@@ -271,17 +271,17 @@
                     "properties": {
                         "max_pool_size": {
                             "description": "Total number of open connections (active + idle) allowed in the pool.",
-                            "type": "int",
+                            "type": "integer",
                             "default": 100
                         },
                         "min_pool_size": {
                             "description": "Minimum number of idle connections that will be maintained, even when the application is idle or under low load.",
-                            "type": "int",
+                            "type": "integer",
                             "default": 2
                         },
                         "max_connecting": {
                             "description": "Controls the number of simultaneous new connection attempts being made.",
-                            "type": "int",
+                            "type": "integer",
                             "default": 2
                         },
                         "architecture": {
@@ -293,31 +293,32 @@
                             "type": "object",
                             "description": "Authentification configuration",
                             "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "description": "add mongodb to server",
-                                    "default": true
-                                },
-                                "rootUser": {
-                                    "type": "string",
-                                    "description": "root name",
-                                    "default": "root"
-                                },
-                                "rootPassword": {
-                                    "type": "string",
-                                    "description": "root password",
-                                    "default": "changeme",
-                                    "x-onyxia": {
-                                        "overwriteDefaultWith": "{{project.password}}"
-                                    }
-                                },
                                 "databases": {
                                     "type": "array",
                                     "items": {
                                         "type": "string"
-                                    },
-                                    "description": "default databases",
-                                    "default": ["defaultdb"]
+                                    }
+                                },
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "passwords": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "rootPassword": {
+                                    "type": "string"
+                                },
+                                "rootUser": {
+                                    "type": "string"
+                                },
+                                "usernames": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
                                 }
                             }
                         },
@@ -454,11 +455,11 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.4",
+                                    "default": "0.3.5",
                                     "enum": [
                                         "latest",
                                         "0.3.1",
-                                        "0.3.4"
+                                        "0.3.5"
                                     ]
                                 }
                             }
