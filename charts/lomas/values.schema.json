@@ -42,10 +42,10 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.4",
+                                    "default": "0.3.5",
                                     "enum": [
                                         "latest",
-                                        "0.3.4"
+                                        "0.3.5"
                                     ]
                                 }
                             }
@@ -270,15 +270,18 @@
                     "properties": {
                         "max_pool_size": {
                             "description": "Total number of open connections (active + idle) allowed in the pool.",
-                            "type": "int"
+                            "type": "int",
+                            "default": 100
                         },
                         "min_pool_size": {
                             "description": "Minimum number of idle connections that will be maintained, even when the application is idle or under low load.",
-                            "type": "int"
+                            "type": "int",
+                            "default": 2
                         },
                         "max_connecting": {
                             "description": "Controls the number of simultaneous new connection attempts being made.",
-                            "type": "int"
+                            "type": "int",
+                            "default": 2
                         },
                         "architecture": {
                             "type": "string",
@@ -450,10 +453,10 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.4",
+                                    "default": "0.3.5",
                                     "enum": [
                                         "latest",
-                                        "0.3.4"
+                                        "0.3.5"
                                     ]
                                 }
                             }
@@ -720,6 +723,7 @@
                                         "private_db_credentials": {
                                             "description": "List of credentials to access private dataset",
                                             "type": "array",
+                                            "default": [] ,
                                             "items": {
                                                 "type": "object",
                                                 "properties": {
