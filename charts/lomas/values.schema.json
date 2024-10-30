@@ -293,31 +293,49 @@
                             "type": "object",
                             "description": "Authentification configuration",
                             "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "add mongodb to server",
+                                    "default": true
+                                },
+                                "rootUser": {
+                                    "type": "string",
+                                    "description": "root name",
+                                    "default": "root"
+                                },
+                                "rootPassword": {
+                                    "type": "string",
+                                    "description": "root password",
+                                    "default": "changeme",
+                                    "x-onyxia": {
+                                        "overwriteDefaultWith": "{{project.password}}"
+                                    }
+                                },
                                 "databases": {
                                     "type": "array",
                                     "items": {
                                         "type": "string"
-                                    }
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "passwords": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                },
-                                "rootPassword": {
-                                    "type": "string"
-                                },
-                                "rootUser": {
-                                    "type": "string"
+                                    },
+                                    "description": "default databases",
+                                    "default": ["defaultdb"]
                                 },
                                 "usernames": {
                                     "type": "array",
                                     "items": {
                                         "type": "string"
+                                    },
+                                    "description": "default usernames",
+                                    "default": "user"
+                                },
+                                "passwords": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "default passwords",
+                                    "default": "change_me",
+                                    "x-onyxia": {
+                                        "overwriteDefaultWith": ["{{project.password}}"]
                                     }
                                 }
                             }
