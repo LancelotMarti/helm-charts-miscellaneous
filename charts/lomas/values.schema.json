@@ -45,6 +45,7 @@
                                     "default": "0.3.5",
                                     "enum": [
                                         "latest",
+                                        "0.3.1",
                                         "0.3.5"
                                     ]
                                 }
@@ -270,17 +271,17 @@
                     "properties": {
                         "max_pool_size": {
                             "description": "Total number of open connections (active + idle) allowed in the pool.",
-                            "type": "int",
+                            "type": "integer",
                             "default": 100
                         },
                         "min_pool_size": {
                             "description": "Minimum number of idle connections that will be maintained, even when the application is idle or under low load.",
-                            "type": "int",
+                            "type": "integer",
                             "default": 2
                         },
                         "max_connecting": {
                             "description": "Controls the number of simultaneous new connection attempts being made.",
-                            "type": "int",
+                            "type": "integer",
                             "default": 2
                         },
                         "architecture": {
@@ -317,6 +318,25 @@
                                     },
                                     "description": "default databases",
                                     "default": ["defaultdb"]
+                                },
+                                "usernames": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "default usernames",
+                                    "default": "user"
+                                },
+                                "passwords": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "default passwords",
+                                    "default": "change_me",
+                                    "x-onyxia": {
+                                        "overwriteDefaultWith": ["{{project.password}}"]
+                                    }
                                 }
                             }
                         },
@@ -456,6 +476,7 @@
                                     "default": "0.3.5",
                                     "enum": [
                                         "latest",
+                                        "0.3.1",
                                         "0.3.5"
                                     ]
                                 }
@@ -602,26 +623,6 @@
                                 "settings": {
                                     "type": "object",
                                     "properties": {
-                                        "dataset_store": {
-                                            "type": "object",
-                                            "description": "Dataset store configuration",
-                                            "properties": {
-                                                "ds_store_type": {
-                                                    "description": "The type of dataset store.",
-                                                    "enum": [
-                                                        "basic",
-                                                        "LRU_cache"
-                                                    ],
-                                                    "type": "string",
-                                                    "default": "LRU_cache"
-                                                },
-                                                "max_memory_usage": {
-                                                    "description": "Max memory usage of dataset store, in MiB. Only useful for LRU_cache type.",
-                                                    "type": "integer",
-                                                    "default": 512
-                                                }
-                                            }
-                                        },
                                         "develop_mode": {
                                             "description": "When True, service database is reset to default user and dataset collections.",
                                             "type": "boolean",
@@ -723,7 +724,7 @@
                                         "private_db_credentials": {
                                             "description": "List of credentials to access private dataset",
                                             "type": "array",
-                                            "default": [] ,
+                                            "default": [],
                                             "items": {
                                                 "type": "object",
                                                 "properties": {
