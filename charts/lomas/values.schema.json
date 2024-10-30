@@ -42,10 +42,11 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.5",
+                                    "default": "0.3.4",
                                     "enum": [
                                         "latest",
-                                        "0.3.5"
+                                        "0.3.1",
+                                        "0.3.4"
                                     ]
                                 }
                             }
@@ -453,10 +454,11 @@
                                 },
                                 "tag": {
                                     "type": "string",
-                                    "default": "0.3.5",
+                                    "default": "0.3.4",
                                     "enum": [
                                         "latest",
-                                        "0.3.5"
+                                        "0.3.1",
+                                        "0.3.4"
                                     ]
                                 }
                             }
@@ -602,26 +604,6 @@
                                 "settings": {
                                     "type": "object",
                                     "properties": {
-                                        "dataset_store": {
-                                            "type": "object",
-                                            "description": "Dataset store configuration",
-                                            "properties": {
-                                                "ds_store_type": {
-                                                    "description": "The type of dataset store.",
-                                                    "enum": [
-                                                        "basic",
-                                                        "LRU_cache"
-                                                    ],
-                                                    "type": "string",
-                                                    "default": "LRU_cache"
-                                                },
-                                                "max_memory_usage": {
-                                                    "description": "Max memory usage of dataset store, in MiB. Only useful for LRU_cache type.",
-                                                    "type": "integer",
-                                                    "default": 512
-                                                }
-                                            }
-                                        },
                                         "develop_mode": {
                                             "description": "When True, service database is reset to default user and dataset collections.",
                                             "type": "boolean",
@@ -723,7 +705,7 @@
                                         "private_db_credentials": {
                                             "description": "List of credentials to access private dataset",
                                             "type": "array",
-                                            "default": [] ,
+                                            "default": [],
                                             "items": {
                                                 "type": "object",
                                                 "properties": {
