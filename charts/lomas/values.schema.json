@@ -325,7 +325,7 @@
                                         "type": "string"
                                     },
                                     "description": "default usernames",
-                                    "default": "user"
+                                    "default": ["user"]
                                 },
                                 "passwords": {
                                     "type": "array",
@@ -333,7 +333,7 @@
                                         "type": "string"
                                     },
                                     "description": "default passwords",
-                                    "default": "change_me",
+                                    "default": ["change_me"],
                                     "x-onyxia": {
                                         "overwriteDefaultWith": ["{{project.password}}"]
                                     }
