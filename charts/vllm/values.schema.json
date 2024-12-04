@@ -101,6 +101,26 @@
                         }
                     }
                 },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "object",
+                            "properties": {
+                                "number": {
+                                    "type": "integer",
+                                    "default": 8000,
+                                    "description": "The port number the service listens on."
+                                },
+                                "nodePort": {
+                                    "type": "integer",
+                                    "default": 30501,
+                                    "description": "The NodePort value for the service, must be in the range for NodePorts."
+                                }
+                            }
+                        }
+                    }
+                },
                 "ingress": {
                     "type": "object",
                     "properties": {
